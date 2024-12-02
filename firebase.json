@@ -1,0 +1,28 @@
+{
+    "hosting": [
+        {
+            "target": "homespace-web",
+            "rewrites": [
+                {
+                    "source": "**",
+                    "run": {
+                        "serviceId": "homespace-web-prd",
+                        "region": "southamerica-east1"
+                    }
+                }
+            ]
+        },
+        {
+            "target": "homespace-api",
+            "rewrites": [
+                {
+                    "source": "**",
+                    "run": {
+                        "serviceId": "homespace-api-prd",
+                        "region": "southamerica-east1"
+                    }
+                }
+            ]
+        }
+    ]
+}

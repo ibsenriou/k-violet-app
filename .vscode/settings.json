@@ -1,0 +1,14 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "cSpell.words": [
+        "Ações",
+        "Adicionar",
+        "Buscar",
+        "Datagrid",
+        "Informations",
+        "obrigatório",
+        "Quantidade",
+        "residentials",
+        "uhab"
+    ]
+}
