@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useCallback, useContext, useMemo } from 'react'
-import { AccessControlService } from 'src/services/accessControlService'
+
 
 export const PermissionContext = createContext<{
     can: (permission: string, attributes?: { [key: string]: string }) => boolean
@@ -13,21 +13,21 @@ export const PermissionContext = createContext<{
 })
 
 export const PermissionProvider = ({ children }: { children: React.ReactNode }) => {
-    const permissionQuery = useQuery({
-        queryKey: ['access_control'],
-        queryFn: async () => {
-            return AccessControlService.user_role_permissions.get()
-        },
-        select: response => response.data
-    })
+    // const permissionQuery = useQuery({
+    //     queryKey: ['access_control'],
+    //     queryFn: async () => {
+    //         return AccessControlService.user_role_permissions.get()
+    //     },
+    //     select: response => response.data
+    // })
 
     const canWithAttributes = useCallback(
         (componentPermissionAndAction: string, attributes?: { [key: string]: string }): [boolean, string[][]] => {
-            const resolvedPermissions: string[] = permissionQuery.data?.resolved_permissions || []
+            const resolvedPermissions: string[] = []
 
             const [componentPermission, action] = componentPermissionAndAction.split(':')
             const componentPermissionPath = componentPermission.split('.')
-            let matchedAttributes = []
+            const matchedAttributes = []
             let hasPermission = false
 
             for (let i = 0; i < componentPermissionPath.length; i++) {
@@ -35,7 +35,7 @@ export const PermissionProvider = ({ children }: { children: React.ReactNode }) 
                 for (const resolvedPermissionAndAction of resolvedPermissions) {
                     const filters = [] as string[]
                     let match
-                    let localMatchedAttributes = []
+                    const localMatchedAttributes = []
                     const regex = /\[([^\]]+)\]/g
                     while ((match = regex.exec(resolvedPermissionAndAction)) !== null) {
                         filters.push(match[1])
@@ -75,26 +75,27 @@ export const PermissionProvider = ({ children }: { children: React.ReactNode }) 
 
             return [hasPermission, matchedAttributes]
         },
-        [permissionQuery.dataUpdatedAt]
+        []
     )
 
     const can = useCallback(
         (componentPermissionAndAction: string, attributes?: { [key: string]: string }): boolean => {
             return canWithAttributes(componentPermissionAndAction, attributes)[0]
         },
-        [permissionQuery.dataUpdatedAt]
+        []
     )
 
     const canModule = useCallback(
         (componentPermission: string) => {
-            const resolvedPermissions: string[] = permissionQuery.data?.resolved_permissions || []
+            const resolvedPermissions: string[] = []
             if (resolvedPermissions.length === 0) {
                 return false
             }
 
             function checkPermission(path: string): boolean {
                 if (path === '') return false
-                return (
+
+return (
                     resolvedPermissions.some(permission => permission.startsWith(`${path}.*`)) ||
                     checkPermission(path.split('.').slice(0, -1).join('.'))
                 )
@@ -106,13 +107,14 @@ export const PermissionProvider = ({ children }: { children: React.ReactNode }) 
             )
         },
 
-        [permissionQuery.dataUpdatedAt]
+        []
     )
 
     const contextValue = useMemo(() => ({ can, canModule, canWithAttributes }), [can, canModule, canWithAttributes])
 
     const _children = useMemo(() => children, [children])
-    return <PermissionContext.Provider value={contextValue}>{_children}</PermissionContext.Provider>
+
+return <PermissionContext.Provider value={contextValue}>{_children}</PermissionContext.Provider>
 }
 
 export const usePermission = (defaultPermission?: string, defaultAttributes?: { [key: string]: string }) => {
