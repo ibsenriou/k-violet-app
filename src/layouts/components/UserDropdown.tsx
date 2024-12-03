@@ -89,14 +89,7 @@ const UserDropdown = (props: Props) => {
                     horizontal: 'right'
                 }}
             >
-                <CustomAvatar
-                    skin='light'
-                    variant='rounded'
-                    color={'success'}
-                    sx={{ fontWeight: 600, borderRadius: '50%', width: 50, height: 50 }}
-                >
-                    {getInitials(natualPerson.name)}
-                </CustomAvatar>
+              <Avatar alt='John Doe' src='/images/avatars/6.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Menu
                 anchorEl={anchorEl}
@@ -127,7 +120,7 @@ const UserDropdown = (props: Props) => {
                                 color={'success'}
                                 sx={{ fontWeight: 600, borderRadius: '50%', width: 50, height: 50 }}
                             >
-                                {getInitials(natualPerson.name)}
+                                {getInitials(natualPerson.first_name)}
                             </CustomAvatar>
                         </Badge>
                         <Box
@@ -138,7 +131,7 @@ const UserDropdown = (props: Props) => {
                                 flexDirection: 'column'
                             }}
                         >
-                            <Typography sx={{ fontWeight: 600 }}>{natualPerson.name}</Typography>
+                            <Typography sx={{ fontWeight: 600 }}>{natualPerson.first_name.toUpperCase()}</Typography>
                             <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
                                 {user?.email}
                             </Typography>

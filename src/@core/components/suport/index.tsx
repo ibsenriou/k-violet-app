@@ -25,7 +25,7 @@ interface SuportDialog {
 }
 
 const SuportDialog = ({ open, toggle }: SuportDialog) => {
-    const [whatsappLink, setWhatsappLink] = useState('https://wa.me/5547992452352')
+    const [whatsappLink, setWhatsappLink] = useState('https://wa.me/5519998411588')
 
     return (
         <Dialog
@@ -50,7 +50,7 @@ const SuportDialog = ({ open, toggle }: SuportDialog) => {
                     <Typography variant='h5' sx={{ mb: 3 }}>
                         Suporte
                     </Typography>
-                    <Typography variant='body2'>Entre em contato com o suporte do Homespace Digital</Typography>
+                    <Typography variant='body2'>Entre em contato com o suporte do K-Violet</Typography>
                 </Box>
 
                 <Box sx={{ marginLeft: 3 }}>

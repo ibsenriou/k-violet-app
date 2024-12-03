@@ -2,19 +2,6 @@
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
 
-// const Img = styled('img')(({ theme }) => ({
-//     marginBottom: theme.spacing(10),
-//     [theme.breakpoints.down('lg')]: {
-//         height: 450,
-//         marginTop: theme.spacing(10)
-//     },
-//     [theme.breakpoints.down('md')]: {
-//         height: 400
-//     },
-//     [theme.breakpoints.up('lg')]: {
-//         marginTop: theme.spacing(13)
-//     }
-// }))
 
 const Home = () => {
     const theme = useTheme()

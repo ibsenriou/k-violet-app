@@ -186,7 +186,7 @@ const App = (props: ExtendedAppProps) => {
                     <title>{`${themeConfig.templateName}`}</title>
                     <meta
                         name='description'
-                        content={`${themeConfig.templateName} – Nela tudo é on-line, de forma prática e fácil!`}
+                        content={`${themeConfig.templateName} – Educação e reforço positivo para crianças`}
                     />
                     <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
                     <meta name='viewport' content='initial-scale=1, width=device-width' />

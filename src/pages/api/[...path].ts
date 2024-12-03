@@ -37,8 +37,6 @@ export default (req: IncomingMessage, res: ServerResponse) => {
 
     // const API_URL = 'http://127.0.0.1:8000/'
 
-    // const API_URL = process.env.CLOUDRUN_SERVICE_URL || 'http://127.0.0.1:8000/'
-
     return new Promise<void>((resolve, reject) => {
         proxy.web(
             req,

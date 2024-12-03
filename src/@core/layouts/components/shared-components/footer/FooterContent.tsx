@@ -13,7 +13,7 @@ const FooterContent = () => {
 
     return (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Typography sx={{ mr: 2 }}>{`© ${new Date().getFullYear()} Homespace `}</Typography>
+            <Typography sx={{ mr: 2 }}>{`© ${new Date().getFullYear()} K-Violet`}</Typography>
             {hidden ? null : (
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
                     <Link onClick={togglePetDialog} sx={{ cursor: 'pointer' }}>

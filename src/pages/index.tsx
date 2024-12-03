@@ -13,9 +13,8 @@ import { useAuth } from 'src/hooks/useAuth'
 /**
  *  Set Home URL based on User Roles
  */
-export const getHomeRoute = (role: string) => {
-    if (role === 'Individual Condominium User') return '/home'
-    else return '/home'
+export const getHomeRoute = () => {
+    return '/home'
 }
 
 const Home = () => {
@@ -28,14 +27,14 @@ const Home = () => {
             return
         }
 
-        if (auth.user && auth.user.user_roles?.length > 0) {
-            const homeRoute = getHomeRoute(auth.user.user_roles[0]?.name)
+        if (auth.user) {
+            const homeRoute = getHomeRoute()
 
             // Redirect user to Home URL
             router.replace(homeRoute)
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+
+    }, [auth.user, router])
 
     return <Spinner />
 }
