@@ -20,7 +20,7 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Missões Diárias',
           icon: IceCream,
-          path: '/activities',
+          path: '/missions',
         },
         {
           title: 'Relatório de Atvidades',

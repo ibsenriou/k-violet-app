@@ -2,8 +2,49 @@ import Box from "@mui/material/Box";
 import MissionCard from "./components/MissionCard";
 import MissionHeader from "./components/MissionHeader";
 import Typography from "@mui/material/Typography";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CoreService } from "src/services/coreService";
+import FallbackSpinner from "@core/components/spinner";
 
-const Activities = () => {
+const DailyMissions = () => {
+
+  const dailyMissionsQuery = useQuery({
+    queryKey: ['dailyMissions'],
+    queryFn: () => CoreService.daily_missions.get().then(response => response.data),
+    select: response => response.results
+  })
+
+    // Mutation for completing a mission
+    const completeMissionMutation = useMutation({
+      mutationFn: (missionId: number) =>
+        CoreService.daily_missionId_complete.post({ missionId }, {}),
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["dailyMissions"] });
+      },
+      onError: () => {
+        console.error("Error completing the mission. Please try again later.");
+      },
+    });
+
+    // Handler for completing a mission
+    const handleCompleteMission = (id: number) => {
+      completeMissionMutation.mutate(id);
+    };
+
+  const isLoading = dailyMissionsQuery.isLoading
+
+  const queryClient = useQueryClient()
+
+  // Sort mission list By completed last and not completed first
+  const missionsList = dailyMissionsQuery.data?.sort((a, b) => a.is_completed - b.is_completed) || []
+
+  console.log("missionsList", missionsList)
+
+  const missionsAllCompleted = missionsList.every((mission) => mission.is_completed);
+
+
+  if (isLoading) return <FallbackSpinner />;
+
   return (
     <Box
       sx={{
@@ -18,7 +59,7 @@ const Activities = () => {
     >
       <MissionHeader />
 
-      {/* Celebration Section */}
+      {missionsAllCompleted && (
       <Box
         sx={{
           display: "flex",
@@ -75,40 +116,21 @@ const Activities = () => {
           Volte amanhã para mais missões incríveis! 🚀
         </Typography>
       </Box>
+      )}
 
-      {/* Mission Cards */}
-      <MissionCard
-        title="Ler 1 capítulo do livro 'O pequeno príncipe' antes do almoço"
-        points={50}
-        onConfirm={() => console.log("Confirm")}
-        taskCompleted={false}
-      />
-      <MissionCard
-        title="Fazer 30 minutos de exercícios"
-        points={100}
-        onConfirm={() => console.log("Confirm")}
-        taskCompleted={false}
-      />
-      <MissionCard
-        title="Estudar 1 hora de inglês"
-        points={200}
-        onConfirm={() => console.log("Confirm")}
-        taskCompleted={true}
-      />
-      <MissionCard
-        title="Fazer 30 minutos de meditação"
-        points={150}
-        onConfirm={() => console.log("Confirm")}
-        taskCompleted={true}
-      />
-      <MissionCard
-        title="Ajudar a lavar a louça"
-        points={150}
-        onConfirm={() => console.log("Confirm")}
-        taskCompleted={true}
-      />
+      {
+        missionsList.map((mission, index) => (
+          <MissionCard
+            key={index}
+            description={mission.description}
+            points={mission.points}
+            is_completed={mission.is_completed}
+            onConfirm={() => handleCompleteMission(mission.id)}
+          />
+        ))
+      }
     </Box>
   );
 };
 
-export default Activities;
+export default DailyMissions;

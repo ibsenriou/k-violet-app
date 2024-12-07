@@ -10,13 +10,13 @@ import MissionStatusButton from "./MissionStatusButton";
 import MissionCompleteDialog from "./MissionCompleteDialog";
 
 interface MissionCardProps {
-  title: string;
+  description: string;
   points: number;
+  is_completed: boolean;
   onConfirm: () => void;
-  taskCompleted: boolean;
 }
 
-const TaskCard: React.FC<MissionCardProps> = ({ title, points, onConfirm, taskCompleted }) => {
+const TaskCard: React.FC<MissionCardProps> = ({ description, points, is_completed, onConfirm }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const theme = useTheme();
@@ -46,7 +46,7 @@ const TaskCard: React.FC<MissionCardProps> = ({ title, points, onConfirm, taskCo
           boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.15)",
           margin: 1,
           padding: 2,
-          background: taskCompleted
+          background: is_completed
             ? statusBackgroundColors.completed
             : statusBackgroundColors.pending,
           position: "relative",
@@ -87,7 +87,7 @@ const TaskCard: React.FC<MissionCardProps> = ({ title, points, onConfirm, taskCo
             padding: 1,
           }}
         >
-          <Task sx={{ fontSize: 50, color: taskCompleted ? "#2ecc71" : "#e74c3c" }} />
+          <Task sx={{ fontSize: 50, color: is_completed ? "#2ecc71" : "#e74c3c" }} />
         </Box>
 
         {/* Content Section */}
@@ -100,7 +100,7 @@ const TaskCard: React.FC<MissionCardProps> = ({ title, points, onConfirm, taskCo
             padding: 2,
           }}
         >
-          {/* Title */}
+
           <Typography
             variant="h6"
             fontWeight="bold"
@@ -114,7 +114,7 @@ const TaskCard: React.FC<MissionCardProps> = ({ title, points, onConfirm, taskCo
               WebkitBoxOrient: "vertical",
             }}
           >
-            {title}
+            {description}
           </Typography>
 
           {/* Points */}
@@ -132,7 +132,7 @@ const TaskCard: React.FC<MissionCardProps> = ({ title, points, onConfirm, taskCo
         </Box>
 
         {/* Mission Button */}
-        {!taskCompleted && (
+        {!is_completed && (
           <MissionStatusButton
             onClick={toggleDialog}
             mode={mode}

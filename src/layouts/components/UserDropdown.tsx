@@ -9,7 +9,8 @@ import Divider from '@mui/material/Divider'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import AccountOutline from 'mdi-material-ui/AccountOutline'
+
+// import AccountOutline from 'mdi-material-ui/AccountOutline'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 
 import { useAuth } from 'src/hooks/useAuth'
@@ -56,19 +57,21 @@ const UserDropdown = (props: Props) => {
         setAnchorEl(null)
     }
 
-    const styles = {
-        py: 2,
-        px: 4,
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        color: 'text.primary',
-        textDecoration: 'none',
-        '& svg': {
-            fontSize: '1.375rem',
-            color: 'text.secondary'
-        }
-    }
+    // const styles = {
+    //     py: 2,
+    //     px: 4,
+    //     width: '100%',
+    //     display: 'flex',
+    //     alignItems: 'center',
+    //     color: 'text.primary',
+    //     textDecoration: 'none',
+    //     '& svg': {
+    //         fontSize: '1.375rem',
+    //         color: 'text.secondary'
+    //     }
+    // }
+
+    const userFullName = user?.first_name + ' ' + user?.last_name
 
     const handleLogout = () => {
         logout()
@@ -128,21 +131,28 @@ const UserDropdown = (props: Props) => {
                                 flexDirection: 'column'
                             }}
                         >
-                            <Typography sx={{ fontWeight: 600 }}>{user?.first_name.toUpperCase()}</Typography>
+                            <Typography sx={{ fontWeight: 600 }}>{userFullName}</Typography>
                             <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
                                 {user?.email}
                             </Typography>
+                            <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
+                                {user?.points} moedinhas 💰
+                            </Typography>
+                            <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
+                                {user?.amassed_points} medinhas acumuladas 💰💰💰
+                            </Typography>
+
                         </Box>
                     </Box>
                 </Box>
                 <Divider sx={{ mt: 0, mb: 1 }} />
-                <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/settings/user-data')}>
+                {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/settings/user-data')}>
                     <Box sx={styles}>
                         <AccountOutline sx={{ marginRight: 2 }} />
                         Meus dados
                     </Box>
                 </MenuItem>
-                <Divider />
+                <Divider /> */}
                 <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
                     <LogoutVariant
                         sx={{

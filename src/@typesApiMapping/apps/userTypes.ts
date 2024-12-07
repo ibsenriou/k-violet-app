@@ -8,4 +8,7 @@ export type UserType = {
     first_name: string
     last_name: string
     id: string
+
+    points: number
+    amassed_points: number
 }
