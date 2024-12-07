@@ -10,7 +10,7 @@ import { displayToast } from 'src/views/utils/displayToast'
 import { AuthService } from 'src/services/authService'
 
 type FetchDataParams = {
-    user?: UserType
+    user: UserType
 }
 export const fetchData = createAppAsyncThunk(
     'appUsers/fetchData',
@@ -47,13 +47,13 @@ export const changePassword = createAppAsyncThunk(
 export const appUsersSlice = createSlice({
     name: 'appUsers',
     initialState: {
-        natualPerson: <UserType>{},
+        user: <UserType>{},
         loading: false
     },
     reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchData.fulfilled, (state, action) => {
-            state.natualPerson = action.payload.user
+            state.user = action.payload.user
         })
 
         builder.addMatcher(checkMatchType('appUsers', 'pending'), state => {
@@ -71,11 +71,8 @@ export const appUsersSlice = createSlice({
     }
 })
 
-export const selectUser = (state: RootState) => (state.auth.user!.id ? state.auth.user : null)
-export const selectUserNatualPerson = (state: RootState) => state.user.natualPerson
+export const selectUser = (state: RootState) => (state.auth.user)
 
 export const selectUserLoading = (state: RootState) => state.user.loading
-
-export const selectCondominiumId = (state: RootState) => state.auth.user!.user_roles[0].fk_condominium
 
 export default appUsersSlice.reducer

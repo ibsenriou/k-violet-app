@@ -1,17 +1,16 @@
-import { HomespaceBaseModel } from '@typesApiMapping/apps/core/homeSpaceBaseModelTypes'
 import { useEffect, useState } from 'react'
 import { DjangoModelViewSetDefaultResponse, ServiceRequest } from 'src/services/Url'
 
 type ItemIdType<T> = T extends Array<infer U> ? (U extends { id: string } ? string : number) : undefined
 
-function useService<UrlParams, T extends HomespaceBaseModel>(
+function useService<UrlParams, T>(
     service: ServiceRequest<UrlParams, T>,
     params?: Partial<UrlParams>,
     dependencies?: Array<any>
 ): {
     data: T | undefined
 }
-function useService<UrlParams, T extends HomespaceBaseModel[]>(
+function useService<UrlParams, T>(
     service: ServiceRequest<UrlParams, T>,
     params?: UrlParams,
     dependencies?: Array<any>
@@ -21,7 +20,7 @@ function useService<UrlParams, T extends HomespaceBaseModel[]>(
     findAsync: (itemId?: ItemIdType<T>) => Promise<T extends (infer U)[] ? U : undefined>
 }
 
-function useService<UrlParams, T extends HomespaceBaseModel[] | HomespaceBaseModel>(
+function useService<UrlParams, T >(
     service: ServiceRequest<UrlParams, T>,
     params?: UrlParams,
     dependencies?: Array<any>
@@ -44,10 +43,12 @@ function useService<UrlParams, T extends HomespaceBaseModel[] | HomespaceBaseMod
             const arrayData = response.data as DjangoModelViewSetDefaultResponse<T>
             if (arrayData.results) {
                 setData(arrayData.results)
-                return arrayData.results
+                
+return arrayData.results
             }
             setData(response.data as T)
-            return response.data as T
+            
+return response.data as T
         } catch (error) {}
     }
 
@@ -65,9 +66,11 @@ function useService<UrlParams, T extends HomespaceBaseModel[] | HomespaceBaseMod
             if (Array.isArray(data)) {
                 return data.find(item => item.id == itemId) as T extends Array<infer U> ? U : undefined
             }
-            return data
+            
+return data
         }
-        return data
+        
+return data
     }
 
     useEffect(() => {

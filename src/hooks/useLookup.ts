@@ -1,9 +1,9 @@
-import { HomespaceBaseModel } from '@typesApiMapping/apps/core/homeSpaceBaseModelTypes'
 import { useMemo } from 'react'
 import { ServiceRequest } from 'src/services/Url'
 import useService from './useService'
 
-type LookupBaseModel = HomespaceBaseModel & {
+type LookupBaseModel = {
+    id: string
     description: string
 }
 

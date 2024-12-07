@@ -9,8 +9,6 @@ import Divider from '@mui/material/Divider'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import { styled } from '@mui/material/styles'
-
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 
@@ -18,7 +16,7 @@ import { useAuth } from 'src/hooks/useAuth'
 
 import { Settings } from '@core/context/settingsContext'
 import { useAppSelector } from 'src/store'
-import { selectUser, selectUserNatualPerson } from 'src/store/apps/user'
+import { selectUser } from 'src/store/apps/user'
 import CustomAvatar from '@core/components/mui/avatar'
 import { getInitials } from '@core/utils/get-initials'
 
@@ -26,16 +24,15 @@ interface Props {
     settings: Settings
 }
 
-const BadgeContentSpan = styled('span')(({ theme }) => ({
-    width: 8,
-    height: 8,
-    borderRadius: '50%',
-    backgroundColor: theme.palette.success.main,
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
-}))
+// const BadgeContentSpan = styled('span')(({ theme }) => ({
+//     width: 8,
+//     height: 8,
+//     borderRadius: '50%',
+//     backgroundColor: theme.palette.success.main,
+//     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`
+// }))
 
 const UserDropdown = (props: Props) => {
-    const natualPerson = useAppSelector(selectUserNatualPerson)
     const user = useAppSelector(selectUser)
 
     const { settings } = props
@@ -120,7 +117,7 @@ const UserDropdown = (props: Props) => {
                                 color={'success'}
                                 sx={{ fontWeight: 600, borderRadius: '50%', width: 50, height: 50 }}
                             >
-                                {getInitials(natualPerson.first_name)}
+                                {getInitials(user?.first_name)}
                             </CustomAvatar>
                         </Badge>
                         <Box
@@ -131,7 +128,7 @@ const UserDropdown = (props: Props) => {
                                 flexDirection: 'column'
                             }}
                         >
-                            <Typography sx={{ fontWeight: 600 }}>{natualPerson.first_name.toUpperCase()}</Typography>
+                            <Typography sx={{ fontWeight: 600 }}>{user?.first_name.toUpperCase()}</Typography>
                             <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
                                 {user?.email}
                             </Typography>

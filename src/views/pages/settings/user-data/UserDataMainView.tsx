@@ -12,9 +12,7 @@ import BellOutline from 'mdi-material-ui/BellOutline'
 import BookmarkOutline from 'mdi-material-ui/BookmarkOutline'
 import InformationOutline from 'mdi-material-ui/InformationOutline'
 
-import UserAddressTab from './tabs/UserAddressTab'
-import UserContactsTab from './tabs/UserContactsTab'
-import UserInformationsTab from './tabs/UserInformationsTab'
+
 import UserSecurityTab from './tabs/UserSecurityTab'
 
 const Tab = styled(MuiTab)<TabProps>(({ theme }) => ({
@@ -89,7 +87,7 @@ const UserDataMainView = () => {
                     />
                 </TabList>
 
-                <TabPanel sx={{ p: 0 }} value='info'>
+                {/* <TabPanel sx={{ p: 0 }} value='info'>
                     <UserInformationsTab key={value} />
                 </TabPanel>
                 <TabPanel sx={{ p: 0 }} value='address'>
@@ -97,7 +95,7 @@ const UserDataMainView = () => {
                 </TabPanel>
                 <TabPanel sx={{ p: 0 }} value='contact'>
                     <UserContactsTab key={value} />
-                </TabPanel>
+                </TabPanel> */}
                 <TabPanel sx={{ p: 0 }} value='security'>
                     <UserSecurityTab key={value} />
                 </TabPanel>
