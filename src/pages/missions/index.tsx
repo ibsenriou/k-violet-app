@@ -36,7 +36,13 @@ const DailyMissions = () => {
   const queryClient = useQueryClient()
 
   // Sort mission list By completed last and not completed first
-  const missionsList = dailyMissionsQuery.data?.sort((a, b) => a.is_completed - b.is_completed) || []
+  const missionsList = dailyMissionsQuery.data?.sort((a, b) => {
+    if (a.is_completed && !b.is_completed) return 1;
+    if (!a.is_completed && b.is_completed) return -1;
+
+    return 0;
+  }
+  ) || []
 
   console.log("missionsList", missionsList)
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -27,22 +27,35 @@ const PurchaseConfirmationDialog: React.FC<PurchaseConfirmationDialogProps> = ({
 }) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showCongratsDialog, setShowCongratsDialog] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    // Preload the audio when the component mounts
+    audioRef.current = new Audio("/audio/congrats.mp3");
+    if (audioRef.current) {
+      audioRef.current.preload = "auto"; // Preload the audio file
+    }
+  }, []);
 
   const handleConfirm = () => {
     setShowConfetti(true); // Show celebration effect
     onConfirm();
     toggleDialog();
 
-    // Play the audio
-    const audio = new Audio("/audio/congrats.mp3"); // Path to the sound file in the public folder
-    audio.play();
+    // Play the preloaded audio
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Reset to the beginning in case it's already played
+      audioRef.current.play().catch((error) => {
+        console.error("Audio playback failed:", error);
+      });
+    }
 
     // Open the congratulations modal after confirmation
     setShowCongratsDialog(true);
     setTimeout(() => {
       setShowConfetti(false); // Stop confetti after 3 seconds
       setShowCongratsDialog(false); // Auto-close congratulations modal
-    }, 7000); // Auto-close after 5 seconds
+    }, 5000); // Auto-close after 5 seconds
   };
 
   const remainingCoins = currentCoins - itemCost;

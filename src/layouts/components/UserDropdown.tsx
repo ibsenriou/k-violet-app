@@ -20,6 +20,8 @@ import { useAppSelector } from 'src/store'
 import { selectUser } from 'src/store/apps/user'
 import CustomAvatar from '@core/components/mui/avatar'
 import { getInitials } from '@core/utils/get-initials'
+import { useQuery } from '@tanstack/react-query'
+import { AuthService } from 'src/services/authService'
 
 interface Props {
     settings: Settings
@@ -77,6 +79,14 @@ const UserDropdown = (props: Props) => {
         logout()
         handleDropdownClose()
     }
+
+    const userCoinsQuery = useQuery({
+      queryKey: ['userCoins'],
+      queryFn: () => AuthService.user.get().then(response => response.data)
+    })
+
+    const userCoins = userCoinsQuery.data?.coins || 0
+    const userAmassedCoins = userCoinsQuery.data?.amassed_coins || 0
 
     return (
         <Fragment>
@@ -136,23 +146,17 @@ const UserDropdown = (props: Props) => {
                                 {user?.email}
                             </Typography>
                             <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
-                                {user?.points} moedinhas 💰
+                                {userCoins} moedinhas 💰
                             </Typography>
                             <Typography variant='body2' sx={{ fontSize: '0.7rem', color: 'text.disabled' }}>
-                                {user?.amassed_points} medinhas acumuladas 💰💰💰
+                                {userAmassedCoins} medinhas acumuladas 💰💰💰
                             </Typography>
 
                         </Box>
                     </Box>
                 </Box>
                 <Divider sx={{ mt: 0, mb: 1 }} />
-                {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/settings/user-data')}>
-                    <Box sx={styles}>
-                        <AccountOutline sx={{ marginRight: 2 }} />
-                        Meus dados
-                    </Box>
-                </MenuItem>
-                <Divider /> */}
+
                 <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
                     <LogoutVariant
                         sx={{

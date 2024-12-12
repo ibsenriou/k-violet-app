@@ -30,7 +30,7 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Lojinha',
           icon: StoreIcon,
-          path: '/lojinha',
+          path: '/little-store',
         },
         {
           title: 'Conquistas',

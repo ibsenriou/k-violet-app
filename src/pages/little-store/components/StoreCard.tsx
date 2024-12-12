@@ -3,21 +3,24 @@ import { Card, Box, Typography, Button } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 import PurchaseConfirmationDialog from "./PurchaseConfirmationDialog"; // Ensure correct path
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CoreService } from "src/services/coreService";
+
 interface StoreCardProps {
+  itemId: number;
   name: string;
   cost: number;
   image: string;
   currentCoins: number;
-  onBuy: (item: any) => void; // Adjusted to pass cost of item
   isAffordable: boolean;
 }
 
 const StoreCard: React.FC<StoreCardProps> = ({
+  itemId,
   name,
   cost,
   image,
   currentCoins,
-  onBuy,
   isAffordable,
 }) => {
 
@@ -27,9 +30,23 @@ const StoreCard: React.FC<StoreCardProps> = ({
 
   const toggleDialog = () => setDialogOpen(!dialogOpen);
 
+  const queryClient = useQueryClient()
+
+  const purchaseMutation = useMutation({
+    mutationFn: () => CoreService.store_itemId_buy.post({ itemId: itemId }, {}).then(response => response.data),
+    onMutate: () => {
+      setDialogOpen(false);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userCoins"] });
+    }
+  });
+
   const handleConfirmPurchase = () => {
-    onBuy(cost);
-    toggleDialog();
+    purchaseMutation.mutate();
   };
 
   // Colors for light and dark modes
@@ -80,7 +97,6 @@ const StoreCard: React.FC<StoreCardProps> = ({
           }}
         />
 
-        {/* Item Image */}
         <Box
           sx={{
             display: "flex",
@@ -97,7 +113,6 @@ const StoreCard: React.FC<StoreCardProps> = ({
           <img src={image} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </Box>
 
-        {/* Item Name */}
         <Typography
           variant="h6"
           fontWeight="bold"
@@ -116,7 +131,6 @@ const StoreCard: React.FC<StoreCardProps> = ({
           {name}
         </Typography>
 
-        {/* Item Cost */}
         <Typography
           variant="body1"
           fontWeight="bold"

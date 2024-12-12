@@ -9,6 +9,6 @@ export type UserType = {
     last_name: string
     id: string
 
-    points: number
-    amassed_points: number
+    coins: number
+    amassed_coins: number
 }
