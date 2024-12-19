@@ -31,7 +31,6 @@ const MissionStatusButton: React.FC<MissionStatusButtonProps> = ({ onClick, mode
     }}
     onClick={onClick}
     aria-label="Marcar tarefa como concluída"
-    disabled={isLoading}
   >
     <CheckCircle sx={{ fontSize: 40, color: 'green' }} />
     <Typography

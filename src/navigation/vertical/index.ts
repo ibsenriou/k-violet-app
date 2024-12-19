@@ -1,6 +1,4 @@
 // ** Icon imports
-import AssignmentIcon from '@mui/icons-material/Assignment'
-import CogOutline from 'mdi-material-ui/CogOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 
 import StoreIcon from '@mui/icons-material/Store'
