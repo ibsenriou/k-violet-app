@@ -23,11 +23,6 @@ const navigation = (): VerticalNavItemsType => {
           path: '/missions',
         },
         {
-          title: 'Relatório de Atvidades',
-          icon: AssignmentIcon,
-          path: '/relatorio-atividades',
-        },
-        {
           title: 'Lojinha',
           icon: StoreIcon,
           path: '/little-store',
@@ -35,24 +30,25 @@ const navigation = (): VerticalNavItemsType => {
         {
           title: 'Conquistas',
           icon: AccountChildOutline,
-          path: '/conquistas',
-        },
-        {
-            title: 'Configurações',
-            icon: CogOutline,
-            path: '/admin',
-            children: [
-                {
-                    title: 'Controle de Acesso',
-                    path: '/admin/access-control',
+          path: '/achievements',
+        }
 
-                },
-                {
-                    title: 'Usuários',
-                    path: '/admin/users',
-                }
-            ]
-        },
+        // {
+        //     title: 'Configurações',
+        //     icon: CogOutline,
+        //     path: '/admin',
+        //     children: [
+        //         {
+        //             title: 'Controle de Acesso',
+        //             path: '/admin/access-control',
+
+        //         },
+        //         {
+        //             title: 'Usuários',
+        //             path: '/admin/users',
+        //         }
+        //     ]
+        // },
     ]
 }
 

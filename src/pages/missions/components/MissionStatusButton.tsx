@@ -2,14 +2,16 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CheckCircle } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
 
 interface MissionStatusButtonProps {
   onClick: () => void;
   mode: 'light' | 'dark';
   sx?: object; // Accept additional sx props
+  isLoading: boolean;
 }
 
-const MissionStatusButton: React.FC<MissionStatusButtonProps> = ({ onClick, mode, sx = {} }) => (
+const MissionStatusButton: React.FC<MissionStatusButtonProps> = ({ onClick, mode, sx = {}, isLoading }) => (
   <Box
     sx={{
       width: '20%',
@@ -29,13 +31,14 @@ const MissionStatusButton: React.FC<MissionStatusButtonProps> = ({ onClick, mode
     }}
     onClick={onClick}
     aria-label="Marcar tarefa como concluída"
+    disabled={isLoading}
   >
     <CheckCircle sx={{ fontSize: 40, color: 'green' }} />
     <Typography
       variant="button"
       sx={{ color: 'green', mt: 1, textAlign: 'center', fontSize: '0.6rem' }}
     >
-      Completo
+      {isLoading ? <CircularProgress size={20} /> : 'Concluir'}
     </Typography>
   </Box>
 );

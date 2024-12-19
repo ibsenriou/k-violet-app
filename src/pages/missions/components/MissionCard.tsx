@@ -14,9 +14,10 @@ interface MissionCardProps {
   points: number;
   is_completed: boolean;
   onConfirm: () => void;
+  isLoading: boolean;
 }
 
-const TaskCard: React.FC<MissionCardProps> = ({ description, points, is_completed, onConfirm }) => {
+const TaskCard: React.FC<MissionCardProps> = ({ description, points, is_completed, onConfirm, isLoading }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const theme = useTheme();
@@ -134,6 +135,7 @@ const TaskCard: React.FC<MissionCardProps> = ({ description, points, is_complete
         {/* Mission Button */}
         {!is_completed && (
           <MissionStatusButton
+            isLoading={isLoading}
             onClick={toggleDialog}
             mode={mode}
             sx={{
